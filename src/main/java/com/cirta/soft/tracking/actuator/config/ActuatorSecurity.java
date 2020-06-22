@@ -15,9 +15,19 @@ public class ActuatorSecurity extends WebSecurityConfigurerAdapter {
 //    }
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/actuator/**").hasRole("ACTUATOR")
-                .anyRequest().permitAll();
+    public void configure(HttpSecurity httpSecurity) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/h2-console/**").permitAll()
+//                .antMatchers("/actuator/**").hasRole("ACTUATOR")
+//                .antMatchers("/").permitAll();
+
+
+        httpSecurity
+                .authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/actuator/**").hasRole("ACTUATOR");
+        httpSecurity.csrf().disable();
+        httpSecurity.headers().frameOptions().disable();
     }
 }
